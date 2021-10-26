@@ -16,6 +16,11 @@ function useProvideAuth() {
       return false;
     }
   };
+
+  return {
+    user,
+    signIn,
+  };
 }
 
 export function ProvideAuth({ children }) {
@@ -25,9 +30,4 @@ export function ProvideAuth({ children }) {
 
 export const useAuth = () => {
   return useContext(authContext);
-};
-
-return {
-  user,
-  signIn,
 };
