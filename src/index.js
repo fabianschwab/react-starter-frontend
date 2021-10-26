@@ -4,11 +4,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./pages/App/App";
 import reportWebVitals from "./reportWebVitals";
+import { ProvideAuth } from "./hooks/useAuth";
 
 ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
-    <App />
+    <ProvideAuth>
+      <App />
+    </ProvideAuth>
   </React.StrictMode>,
   document.getElementById("root")
 );

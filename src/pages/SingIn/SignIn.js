@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import "./SignIn.css";
 
 const {
@@ -17,9 +18,14 @@ const SignIn = () => {
   });
   const [error, setError] = useState(false);
 
-  const handleSignIn = () => {
-    console.log(credentials);
-    setError(true);
+  const auth = useAuth();
+
+  const handleSignIn = async () => {
+    if (await auth.signIn(credentials)) {
+      // Navigate to Dashboard
+    } else {
+      setError(true);
+    }
   };
 
   const handelInputChange = (prop) => (event) => {
