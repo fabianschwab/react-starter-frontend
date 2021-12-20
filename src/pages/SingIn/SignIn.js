@@ -4,6 +4,7 @@ import "./SignIn.css";
 
 const {
   Container,
+  Box,
   Typography,
   TextField,
   Stack,
@@ -36,33 +37,35 @@ const SignIn = () => {
   };
 
   return (
-    <Container className="singInScreen" maxWidth="sm">
-      <Stack spacing={2}>
-        <Typography variant="h1">SignIn</Typography>
-        <TextField
-          onChange={handelInputChange("username")}
-          id="username"
-          aria-label="username"
-          label="Username"
-        />
-        <TextField
-          onChange={handelInputChange("password")}
-          id="password"
-          aria-label="password"
-          label="Password"
-          type="password"
-        />
+    <Container maxWidth="sm">
+      <Box className="singInScreen">
+        <Stack spacing={2}>
+          <Typography variant="h1">SignIn</Typography>
+          <TextField
+            onChange={handelInputChange("username")}
+            id="username"
+            aria-label="username"
+            label="Username"
+          />
+          <TextField
+            onChange={handelInputChange("password")}
+            id="password"
+            aria-label="password"
+            label="Password"
+            type="password"
+          />
           {error.show ? (
             <Alert variant="filled" severity="error">
               {error.msg}
             </Alert>
-        ) : (
-          ""
-        )}
-        <Button onClick={handleSignIn} size="large" variant="contained">
-          SignIn
-        </Button>
-      </Stack>
+          ) : (
+            ""
+          )}
+          <Button onClick={handleSignIn} size="large" variant="contained">
+            SignIn
+          </Button>
+        </Stack>
+      </Box>
     </Container>
   );
 };
