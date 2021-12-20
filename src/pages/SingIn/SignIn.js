@@ -16,20 +16,22 @@ const SignIn = () => {
     username: "",
     password: "",
   });
-  const [error, setError] = useState(false);
+
+  const [error, setError] = useState({ show: false, msg: "" });
 
   const auth = useAuth();
 
   const handleSignIn = async () => {
-    if (await auth.signIn(credentials)) {
+    const signedIn = await auth.signIn(credentials);
+    if (signedIn.auth) {
       // Navigate to Dashboard
     } else {
-      setError(true);
+      setError({ show: true, msg: signedIn.msg });
     }
   };
 
   const handelInputChange = (prop) => (event) => {
-    setError(false);
+    setError({ show: false });
     setCredentials({ ...credentials, [prop]: event.target.value });
   };
 
@@ -50,8 +52,10 @@ const SignIn = () => {
           label="Password"
           type="password"
         />
-        {error ? (
-          <Alert severity="error">Incorrect Username or Password.</Alert>
+          {error.show ? (
+            <Alert variant="filled" severity="error">
+              {error.msg}
+            </Alert>
         ) : (
           ""
         )}

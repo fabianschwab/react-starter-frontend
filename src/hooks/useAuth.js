@@ -10,10 +10,10 @@ function useProvideAuth() {
     try {
       const result = await axios.post("/signin", credentials);
       setUser(result.data);
-      return true;
+      return { auth: true };
     } catch (error) {
       console.error(error);
-      return false;
+      return { auth: false, msg: error.response.data.message };
     }
   };
 
