@@ -8,11 +8,17 @@ function useProvideAuth() {
 
   const signIn = async (credentials) => {
     try {
-      const result = await axios.post("/signin", credentials);
-      setUser(result.data);
+      const response = await axios.post("/signin", credentials);
+
+      setUser({ username: response.data.username });
+
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+
       return { auth: true };
     } catch (error) {
       console.error(error);
+
       return { auth: false, msg: error.response.data.message };
     }
   };
