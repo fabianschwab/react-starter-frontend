@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import axiosJWT from "../../utils/axiosJWT";
 import SignIn from "../SingIn/SignIn";
+import SignOut from "../SignOut/SignOut";
 import UserProfile from "../UserProfile/UserProfile";
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
         <Button variant="outlined" onClick={handleClick}>
           Click
         </Button>
+        <SignOut />
         <UserProfile />
       </Fragment>
     );

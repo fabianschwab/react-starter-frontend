@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
+import axiosJWT from "../utils/axiosJWT";
 
 const authContext = createContext();
 
@@ -23,9 +24,27 @@ function useProvideAuth() {
     }
   };
 
+  const signOut = async () => {
+    try {
+      const response = await axiosJWT.get("/signout");
+
+      setUser(null);
+
+      localStorage.removeItem("accessToken", response.data.accessToken);
+      localStorage.removeItem("refreshToken", response.data.refreshToken);
+
+      return { auth: false };
+    } catch (error) {
+      console.error(error);
+
+      return { auth: true, msg: error.response.data.message };
+    }
+  };
+
   return {
     user,
     signIn,
+    signOut,
   };
 }
 
