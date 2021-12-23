@@ -1,7 +1,7 @@
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "@mui/material";
 
-const SignOut = () => {
+const SignOutButton = () => {
   const auth = useAuth();
 
   const handleSignOut = async () => {
@@ -14,4 +14,4 @@ const SignOut = () => {
   );
 };
 
-export default SignOut;
+export default SignOutButton;

@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import "./SignIn.css";
-
-const {
+import {
   Container,
   Box,
   Typography,
@@ -10,9 +10,9 @@ const {
   Stack,
   Button,
   Alert,
-} = require("@mui/material");
+} from "@mui/material";
 
-const SignIn = () => {
+const SignIn = ({ to }) => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -21,11 +21,13 @@ const SignIn = () => {
   const [error, setError] = useState({ show: false, msg: "" });
 
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleSignIn = async () => {
     const signedIn = await auth.signIn(credentials);
     if (signedIn.auth) {
-      // Navigate to Dashboard
+      // Navigate to passed path
+      navigate(to);
     } else {
       setError({ show: true, msg: signedIn.msg });
     }
