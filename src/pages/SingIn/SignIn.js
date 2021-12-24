@@ -34,7 +34,6 @@ const SignIn = ({ to }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(JSON.stringify(values, null, 2));
       const signedIn = await auth.signIn(values);
       if (signedIn.auth) {
         // Navigate to passed path
