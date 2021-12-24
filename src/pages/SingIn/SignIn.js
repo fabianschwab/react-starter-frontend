@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import "./SignIn.css";
 import {
@@ -21,6 +21,7 @@ const SignIn = ({ to }) => {
 
   const auth = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const validationSchema = yup.object({
     username: yup.string().required("Username is required"),
@@ -36,8 +37,9 @@ const SignIn = ({ to }) => {
     onSubmit: async (values) => {
       const signedIn = await auth.signIn(values);
       if (signedIn.auth) {
-        // Navigate to passed path
-        navigate(to);
+        // Navigate to passed path or if redirected return to old page
+        const goto = location.state?.from?.pathname || to;
+        navigate(goto);
       } else {
         setError({ show: true, msg: signedIn.msg });
       }

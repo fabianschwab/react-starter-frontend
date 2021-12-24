@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import axiosJWT from "../utils/axiosJWT";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
@@ -63,9 +63,9 @@ function useProvideAuth() {
 
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
-  return useContext(authContext);
+  return useContext(AuthContext);
 };

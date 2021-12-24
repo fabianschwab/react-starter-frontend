@@ -6,6 +6,7 @@ const SignOutButton = () => {
 
   const handleSignOut = async () => {
     auth.signOut();
+    // TODO: Add redirect to.
   };
   return (
     <Button variant="outlined" onClick={handleSignOut}>
