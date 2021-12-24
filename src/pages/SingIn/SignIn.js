@@ -10,7 +10,9 @@ import {
   Stack,
   Button,
   Alert,
+  Divider,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const SignIn = ({ to }) => {
   const [credentials, setCredentials] = useState({
@@ -48,6 +50,7 @@ const SignIn = ({ to }) => {
             id="username"
             aria-label="username"
             label="Username"
+            type="text"
           />
           <TextField
             onChange={handelInputChange("password")}
@@ -65,6 +68,15 @@ const SignIn = ({ to }) => {
           )}
           <Button onClick={handleSignIn} size="large" variant="contained">
             SignIn
+          </Button>
+          <Divider sx={{ color: grey[400] }}>or</Divider>
+          <Button
+            onClick={() => {
+              navigate("/signup");
+            }}
+            variant="outlined"
+          >
+            Sign Up
           </Button>
         </Stack>
       </Box>
