@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SignUp.css";
+import { useAuth } from "../../hooks/useAuth";
 import {
   Container,
   Box,
@@ -7,13 +8,16 @@ import {
   TextField,
   Stack,
   Button,
+  Alert,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 
-const SignUp = () => {
+const SignUp = ({ to }) => {
+  const auth = useAuth();
   const navigate = useNavigate();
+  const [error, setError] = useState({ show: false, msg: "" });
 
   const validationSchema = yup.object({
     username: yup.string().required("Username is required"),
@@ -39,8 +43,14 @@ const SignUp = () => {
       confirmPassword: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, formikBag, props) => {
+      const signedUp = await auth.signUp(values);
+      if (signedUp.auth) {
+        // Navigate to passed path
+        navigate(to);
+      } else {
+        setError({ show: true, msg: signedUp.msg });
+      }
     },
   });
 
@@ -57,7 +67,10 @@ const SignUp = () => {
               label="Username"
               type="text"
               value={formik.values.username}
-              onChange={formik.handleChange}
+              onChange={(value) => {
+                formik.handleChange(value);
+                setError({ show: false, msg: "" });
+              }}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
             />
@@ -68,7 +81,10 @@ const SignUp = () => {
               label="E-Mail"
               type="email"
               value={formik.values.email}
-              onChange={formik.handleChange}
+              onChange={(value) => {
+                formik.handleChange(value);
+                setError({ show: false, msg: "" });
+              }}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
@@ -99,6 +115,13 @@ const SignUp = () => {
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
             />
+            {error.show ? (
+              <Alert variant="filled" severity="error">
+                {error.msg}
+              </Alert>
+            ) : (
+              ""
+            )}
             <Box className="signUpButtons">
               <Button type="submit" fullWidth variant="contained">
                 SignUp
