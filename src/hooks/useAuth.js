@@ -24,6 +24,18 @@ function useProvideAuth() {
     }
   };
 
+  const signUp = async (credentials) => {
+    try {
+      await axios.post("/signUp", credentials);
+
+      return { auth: true };
+    } catch (error) {
+      console.error(error);
+
+      return { auth: false, msg: error.response.data.message };
+    }
+  };
+
   const signOut = async () => {
     try {
       const response = await axiosJWT.get("/signout");
@@ -44,6 +56,7 @@ function useProvideAuth() {
   return {
     user,
     signIn,
+    signUp,
     signOut,
   };
 }
