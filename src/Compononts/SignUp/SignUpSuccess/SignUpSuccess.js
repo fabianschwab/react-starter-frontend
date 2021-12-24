@@ -18,7 +18,7 @@ const SignUpSuccess = ({ to }) => {
       </Typography>
       <Button
         sx={{ marginTop: "32px" }}
-        variant="outlined"
+        variant="contained"
         onClick={() => {
           navigate(to);
         }}
