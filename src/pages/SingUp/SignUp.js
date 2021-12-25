@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import SignUpForm from "../../Compononts/SignUp/SignUpForm/SignUpForm";
-import SignUpSuccess from "../../Compononts/SignUp/SignUpSuccess/SignUpSuccess";
+import SignUpForm from "../../Components/SignUp/SignUpForm/SignUpForm";
+import SignUpSuccess from "../../Components/SignUp/SignUpSuccess/SignUpSuccess";
 import { Container, Box } from "@mui/material";
 
 const SignUp = ({ to }) => {

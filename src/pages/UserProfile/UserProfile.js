@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useAxiosJWT from "../../hooks/useAxiosJWT";
-import SignOutButton from "../../Compononts/SignOutButton/SignOutButton";
+import SignOutButton from "../../Components/SignOutButton/SignOutButton";
 
 const UserProfile = () => {
   const { response, loading, error } = useAxiosJWT({
