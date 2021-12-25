@@ -11,8 +11,9 @@ function useProvideAuth() {
     try {
       const response = await axios.post("/signin", credentials);
 
-      setUser({ username: response.data.username });
+      setUser({ ...response.data.user });
 
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
 
@@ -38,12 +39,11 @@ function useProvideAuth() {
 
   const signOut = async () => {
     try {
-      const response = await axiosJWT.get("/signout");
+      await axiosJWT.get("/signout");
 
       setUser(null);
 
-      localStorage.removeItem("accessToken", response.data.accessToken);
-      localStorage.removeItem("refreshToken", response.data.refreshToken);
+      localStorage.clear();
 
       return { auth: false };
     } catch (error) {
@@ -53,8 +53,17 @@ function useProvideAuth() {
     }
   };
 
+  const getUser = () => {
+    if (!user) {
+      const userFromStorage = JSON.parse(localStorage.getItem("user"));
+      setUser(userFromStorage);
+      return userFromStorage;
+    }
+    return user;
+  };
+
   return {
-    user,
+    getUser,
     signIn,
     signUp,
     signOut,

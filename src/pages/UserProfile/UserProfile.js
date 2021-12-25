@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import useAxiosJWT from "../../hooks/useAxiosJWT";
+import SignOutButton from "../../Compononts/SignOutButton/SignOutButton";
 
 const UserProfile = () => {
   const { response, loading, error } = useAxiosJWT({
     method: "get",
-    url: "/users/1001",
+    url: `/profile`,
   });
   const [data, setData] = useState([]);
 
@@ -28,6 +29,7 @@ const UserProfile = () => {
             </div>
           )}
           <div>{data && <p>{data.username}</p>}</div>
+          <SignOutButton to={"/"} />
         </div>
       )}
     </div>
