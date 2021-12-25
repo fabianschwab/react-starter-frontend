@@ -1,12 +1,15 @@
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const SignOutButton = () => {
+const SignOutButton = ({ to }) => {
   const auth = useAuth();
+
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     auth.signOut();
-    // TODO: Add redirect to.
+    navigate(to);
   };
   return (
     <Button variant="outlined" onClick={handleSignOut}>
