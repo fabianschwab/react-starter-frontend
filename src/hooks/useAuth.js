@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import axiosJWT from "../utils/axiosJWT";
+import jwtDecode from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -13,7 +14,6 @@ function useProvideAuth() {
 
       setUser({ ...response.data.user });
 
-      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
 
@@ -37,36 +37,43 @@ function useProvideAuth() {
     }
   };
 
-  const signOut = async () => {
+  const signOut = async (to) => {
+    let message = "SignOut successful.";
     try {
       await axiosJWT.get("/signout");
-
-      setUser(null);
-
-      localStorage.clear();
-
-      return { auth: false };
     } catch (error) {
       console.error(error);
-
-      return { auth: true, msg: error.response.data.message };
+      message = "Error during sign out process. Session already expired.";
+    } finally {
+      setUser(null);
+      localStorage.clear();
     }
+    return { auth: false, msg: message };
   };
 
-  const getUser = () => {
-    if (!user) {
-      const userFromStorage = JSON.parse(localStorage.getItem("user"));
-      setUser(userFromStorage);
-      return userFromStorage;
+  const isAuth = () => {
+    // When refreshToken is expired, user is no longer authenticated
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (refreshToken) {
+      const currentDate = new Date();
+      const decodedToken = jwtDecode(refreshToken);
+      if (decodedToken.exp * 1000 > currentDate.getTime()) {
+        return true;
+      }
     }
-    return user;
+    localStorage.clear();
+    return false;
   };
+
+  // TODO: function to get user information if user is empty
 
   return {
-    getUser,
+    isAuth,
     signIn,
     signUp,
     signOut,
+    user,
   };
 }
 
