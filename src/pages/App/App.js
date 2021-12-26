@@ -26,6 +26,7 @@ function App() {
         <Typography variant="caption">
           Your are now logged in and can see protected content.
         </Typography>
+        <Link to={"/profile"}>Profile</Link>
       </Container>
     );
   };
