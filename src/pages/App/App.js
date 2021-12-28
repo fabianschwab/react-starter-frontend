@@ -2,10 +2,10 @@ import { Container, Divider, Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import SignIn from "../SingIn/SignIn";
 import SignUp from "../SingUp/SignUp";
-import UserProfile from "../UserProfile/UserProfile";
 import "./App.css";
 import { useAuth } from "../../hooks/useAuth";
 import { useLocation, Navigate } from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
 
 function App() {
   const Home = () => {
@@ -19,18 +19,6 @@ function App() {
     );
   };
 
-  const Dummy = () => {
-    return (
-      <Container maxWidth="md">
-        <Typography>Hello User!</Typography>
-        <Typography variant="caption">
-          Your are now logged in and can see protected content.
-        </Typography>
-        <Link to={"/profile"}>Profile</Link>
-      </Container>
-    );
-  };
-
   return (
     <Router>
       <Routes>
@@ -38,32 +26,24 @@ function App() {
         <Route
           path="/signup"
           element={
-            <NotWhenAuthenticated>
+            <RedirectIfAuth>
               <SignUp to="/signin" />
-            </NotWhenAuthenticated>
+            </RedirectIfAuth>
           }
         />
         <Route
           path="/signin"
           element={
-            <NotWhenAuthenticated>
-              <SignIn to="/profile" />
-            </NotWhenAuthenticated>
+            <RedirectIfAuth>
+              <SignIn to="/dashboard" />
+            </RedirectIfAuth>
           }
         />
         <Route
-          path="/profile"
+          path="/dashboard"
           element={
             <RequireAuth>
-              <UserProfile />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/dummy"
-          element={
-            <RequireAuth>
-              <Dummy />
+              <Dashboard />
             </RequireAuth>
           }
         />
@@ -87,11 +67,11 @@ function RequireAuth({ children }) {
   return children;
 }
 
-function NotWhenAuthenticated({ children }) {
+function RedirectIfAuth({ children }) {
   const auth = useAuth();
 
   if (auth.isAuth()) {
-    return <Navigate to="/profile" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return children;
