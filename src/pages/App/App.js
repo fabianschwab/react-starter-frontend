@@ -6,6 +6,7 @@ import "./App.css";
 import { useAuth } from "../../hooks/useAuth";
 import { useLocation, Navigate } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
+import UserProfile from "../UserProfile/UserProfile";
 
 function App() {
   const Home = () => {
@@ -46,7 +47,9 @@ function App() {
               <Dashboard />
             </RequireAuth>
           }
-        />
+        >
+          <Route path="profile" element={<UserProfile />} />
+        </Route>
       </Routes>
     </Router>
   );

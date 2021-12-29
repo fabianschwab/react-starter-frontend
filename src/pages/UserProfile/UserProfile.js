@@ -18,7 +18,6 @@ const UserProfile = () => {
   return (
     <div>
       <h1>User</h1>
-
       {loading ? (
         <p>loading...</p>
       ) : (
@@ -29,9 +28,9 @@ const UserProfile = () => {
             </div>
           )}
           <div>{data && <p>{data.username}</p>}</div>
-          <SignOutButton to={"/"} />
         </div>
       )}
+      <SignOutButton to={"/"} />
     </div>
   );
 };
