@@ -11,8 +11,12 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Dashboard(props) {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {
@@ -21,6 +25,12 @@ export default function Dashboard(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSignOut = async () => {
+    auth.signOut();
+    handleClose();
+    navigate("/");
   };
 
   return (
@@ -66,12 +76,11 @@ export default function Dashboard(props) {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+              <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
-      <Toolbar />
       <Container>
         <Box sx={{ my: 2 }}>
           {[...new Array(12)]
