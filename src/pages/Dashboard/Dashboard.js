@@ -25,15 +25,15 @@ import "./Dashboard.css";
 export default function Dashboard(props) {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [userMenuState, setUserMenuState] = useState(null);
-  const [drawerState, setDrawerState] = useState(null);
+  const [userMenuState, setUserMenuState] = useState(false);
+  const [drawerState, setDrawerState] = useState(false);
 
   const handleMenu = (event) => {
     setUserMenuState(event.currentTarget);
   };
 
   const handleClose = () => {
-    setUserMenuState(null);
+    setUserMenuState(false);
   };
 
   const handleSignOut = async () => {
