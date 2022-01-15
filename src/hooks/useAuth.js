@@ -21,7 +21,12 @@ function useProvideAuth() {
     } catch (error) {
       console.error(error);
 
-      return { auth: false, msg: error.response.data.message };
+      return {
+        auth: false,
+        msg: error.response.data.message
+          ? error.response.data.message
+          : "Authentication service not reachable!",
+      };
     }
   };
 
@@ -33,7 +38,12 @@ function useProvideAuth() {
     } catch (error) {
       console.error(error);
 
-      return { auth: false, msg: error.response.data.message };
+      return {
+        auth: false,
+        msg: error.response.data.message
+          ? error.response.data.message
+          : "Authentication service not reachable!",
+      };
     }
   };
 
